@@ -4,7 +4,7 @@ const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 
-const productsFilePath = path.join(__dirname, '../data/productos.json');
+const productsFilePath = path.join(__dirname, '../data/products');
 
 // Ruta GET '/' - Obtener todos los productos 
 // permite usar limit como query param para limitar la cantidad de productos a mostrar

@@ -3,8 +3,8 @@ const router = express.Router();
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
-const cartsFilePath = path.join(__dirname, '../data/carrito.json');
-const productsFilePath = path.join(__dirname, '../data/productos.json');
+const cartsFilePath = path.join(__dirname, '../data/carts');
+const productsFilePath = path.join(__dirname, '../data/products');
 
 
 // Ruta GET '/:cid' - Obtener un carrito por ID
@@ -42,7 +42,7 @@ router.post('/:cid/product/:pid', (req, res) => {
   const cid = req.params.cid;
   const pid = req.params.pid;
 
-  // Verificar si el producto existe en productos.json
+  // Verificar si el producto existe en products
   fs.readFile(productsFilePath, 'utf-8', (err, productData) => {
     if (err) return res.status(500).send('Error al leer los productos');
     const products = JSON.parse(productData);
