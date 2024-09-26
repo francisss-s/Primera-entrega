@@ -1,0 +1,167 @@
+[
+  {
+    "id": "cc6becfa-dea0-4829-84d6-4c6dfc1b9c1f",
+    "title": "Smartphone XYZ",
+    "description": "Un smartphone de última generación",
+    "code": "SMARTXYZ",
+    "price": 549.99,
+    "status": true,
+    "stock": 20,
+    "category": "Electrónica",
+    "thumbnails": [
+      "images/smartphone_front.jpg",
+      "images/smartphone_back.jpg"
+    ]
+  },
+  {
+    "id": "1406b888-01e8-4c08-b56d-f2eb0c2e5cae",
+    "title": "Televisor Samsong",
+    "description": "Televisor 4k",
+    "code": "TelSam4",
+    "price": 800.99,
+    "status": true,
+    "stock": 105,
+    "category": "Televisor",
+    "thumbnails": [
+      "images/televisor_sam4.jpg",
+      "images/televisor_sam5.jpg"
+    ]
+  },
+  {
+    "id": "a5d86eb4-fd25-4109-ad01-68f407f9ff4d",
+    "title": "aliquip quis",
+    "description": "Pariatur ex proident elit sit sunt ipsum officia labore do. Excepteur ut aute id cupidatat consequat.",
+    "code": "3n12jn",
+    "price": 385.74,
+    "status": true,
+    "stock": 22,
+    "category": "Deportes",
+    "thumbnails": [
+      "imagen1.jpg"
+    ]
+  },
+  {
+    "id": "585629ce-f01b-46da-a489-479033800372",
+    "title": "consectetur nulla",
+    "description": "Ipsum eiusmod proident officia tempor commodo non adipisicing anim exercitation. Nulla minim dolor cillum labore nisi in tempor.",
+    "code": "f4<4E3G4",
+    "price": 959.98,
+    "status": true,
+    "stock": 30,
+    "category": "Deportes",
+    "thumbnails": [
+      "imagen3.jpg",
+      "imagen2.jpg"
+    ]
+  },
+  {
+    "id": "8afb693a-088d-4a2d-800d-e70a95ab3f2e",
+    "title": "incididunt ea",
+    "description": "Dolor labore deserunt do veniam cupidatat ut ullamco in veniam enim Lorem in aliqua velit. Excepteur commodo qui eu dolore in.",
+    "code": "f4<E3G4",
+    "price": 74.32,
+    "status": true,
+    "stock": 8,
+    "category": "Hogar",
+    "thumbnails": [
+      "imagen3.jpg",
+      "imagen2.jpg"
+    ]
+  },
+  {
+    "id": "99340e8b-08b7-496c-9089-f038727737ec",
+    "title": "proident tempor",
+    "description": "Incididunt ullamco aliqua commodo sit adipisicing sunt labore quis reprehenderit aute proident. Tempor et laboris mollit in voluptate do.",
+    "code": "23a4ga4",
+    "price": 657.79,
+    "status": true,
+    "stock": 96,
+    "category": "Deportes",
+    "thumbnails": [
+      "imagen1.jpg"
+    ]
+  },
+  {
+    "id": "5604ed84-2f7a-4046-97b4-121482b89d9a",
+    "title": "qui proident",
+    "description": "Veniam commodo nostrud minim voluptate sit tempor et sint magna enim. Consectetur minim exercitation enim dolor nulla ex ut est do Lorem.",
+    "code": "64g4312231",
+    "price": 498.91,
+    "status": true,
+    "stock": 15,
+    "category": "Hogar",
+    "thumbnails": [
+      "imagen1.jpg"
+    ]
+  },
+  {
+    "id": "434c7601-5948-4e0e-874a-4eddaed2c4b2",
+    "title": "est nisi",
+    "description": "Elit ipsum id amet quis ex esse ea dolor do non ea nulla laborum eiusmod. Commodo excepteur irure sint ut cupidatat et in.",
+    "code": "v45zdsa6",
+    "price": 434.97,
+    "status": true,
+    "stock": 84,
+    "category": "Hogar",
+    "thumbnails": [
+      "imagen2.jpg",
+      "imagen1.jpg"
+    ]
+  },
+  {
+    "id": "df0e74a6-b6d8-4674-b00e-ab2dab55f861",
+    "title": "ut culpa",
+    "description": "Proident aute proident labore eu eu in minim do. Pariatur in magna aliqua quis sint voluptate incididunt deserunt ut duis elit.",
+    "code": "425f31",
+    "price": 891.03,
+    "status": true,
+    "stock": 97,
+    "category": "Hogar",
+    "thumbnails": [
+      "imagen3.jpg",
+      "imagen3.jpg"
+    ]
+  },
+  {
+    "id": "88777838-3cf8-4281-8d3f-457aa1c76e94",
+    "title": "enim duis",
+    "description": "Dolor excepteur quis id duis nostrud esse. Nostrud ex voluptate amet occaecat in commodo culpa officia dolore enim non fugiat veniam consequat.",
+    "code": "añsdk12",
+    "price": 611.57,
+    "status": true,
+    "stock": 6,
+    "category": "Libros",
+    "thumbnails": [
+      "imagen2.jpg",
+      "imagen2.jpg"
+    ]
+  },
+  {
+    "id": "e98c2903-eae0-44cf-8581-bc0228998616",
+    "title": "et nostrud",
+    "description": "Ipsum labore consequat cupidatat mollit occaecat aliquip non excepteur. Cillum pariatur magna quis in eiusmod amet eiusmod proident exercitation veniam amet anim.",
+    "code": "fgh234",
+    "price": 184.27,
+    "status": true,
+    "stock": 15,
+    "category": "Libros",
+    "thumbnails": [
+      "imagen2.jpg",
+      "imagen2.jpg",
+      "imagen3.jpg"
+    ]
+  },
+  {
+    "id": "67250fce-b865-481d-ba37-4c756d1a4a67",
+    "title": "ipsum elit",
+    "description": "Minim culpa est exercitation nisi quis dolore laboris labore reprehenderit cillum eiusmod. Ullamco deserunt voluptate ipsum in enim do deserunt consectetur officia officia.",
+    "code": "asd123",
+    "price": 26.92,
+    "status": true,
+    "stock": 27,
+    "category": "Deportes",
+    "thumbnails": [
+      "imagen2.jpg"
+    ]
+  }
+]
