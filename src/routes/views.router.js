@@ -25,8 +25,8 @@ router.get('/add-product', (req, res) => {
 });
 
 // Ruta para la pantalla de productos en tiempo real
-router.get('/live-products', (req, res) => {
-  res.render('liveProducts', { title: 'Productos en Tiempo Real' });
+router.get('/realTimeProducts', (req, res) => {
+  res.render('realTimeProducts', { title: 'Productos en Tiempo Real' });
 });
 
 // Ruta para la pantalla de crear carrito
