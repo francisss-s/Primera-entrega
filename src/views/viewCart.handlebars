@@ -1,0 +1,30 @@
+<h1>Ver Carrito</h1>
+
+<form id="viewCartForm">
+    <label for="cartId">ID del Carrito:</label>
+    <input type="text" id="cartId" name="cartId" required>
+    <button type="submit">Ver Carrito</button>
+</form>
+
+<ul id="cartDetails"></ul>
+
+<script>
+    document.getElementById('viewCartForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const cartId = document.getElementById('cartId').value;
+
+        fetch(`/api/carts/${cartId}`)
+        .then(response => response.json())
+        .then(cart => {
+            const cartDetails = document.getElementById('cartDetails');
+            cartDetails.innerHTML = '';
+            cart.products.forEach(product => {
+                const li = document.createElement('li');
+                li.textContent = `Producto ID: ${product.id} - Cantidad: ${product.quantity}`;
+                cartDetails.appendChild(li);
+            });
+        })
+        .catch(error => console.error('Error al ver carrito:', error));
+    });
+</script>

@@ -1,0 +1,19 @@
+<h1>Crear Carrito</h1>
+
+<button id="createCartButton">Crear Carrito</button>
+
+<script>
+    document.getElementById('createCartButton').addEventListener('click', function () {
+        fetch('/api/carts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(cart => {
+            alert('Carrito creado con éxito. ID del Carrito: ' + cart.id);
+        })
+        .catch(error => console.error('Error al crear el carrito:', error));
+    });
+</script>

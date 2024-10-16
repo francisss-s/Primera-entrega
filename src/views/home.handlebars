@@ -1,0 +1,13 @@
+<h1>{{title}}</h1>
+
+<ul>
+  {{#each products}}
+    <li>
+      <strong>{{this.title}}</strong> - {{this.price}} USD - Stock: {{this.stock}}
+    </li>
+  {{else}}
+    <li>No hay productos disponibles.</li>
+  {{/each}}
+</ul>
+
+<a href="/add-product">Añadir un nuevo producto</a>
