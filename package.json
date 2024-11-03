@@ -4,11 +4,13 @@
   "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node --env-file=.env src/app.js"
   },
   "dependencies": {
     "express": "^4.18.2",
     "express-handlebars": "^7.0.7",
+    "mongoose": "^8.8.0",
+    "mongoose-paginate-v2": "^1.8.5",
     "socket.io": "^4.5.4",
     "uuid": "^9.0.0"
   },

@@ -1,30 +1,194 @@
-<h1>Ver Carrito</h1>
+<div class="container my-5">
+    <h1 class="text-center mb-4">{{title}}</h1>
 
-<form id="viewCartForm">
-    <label for="cartId">ID del Carrito:</label>
-    <input type="text" id="cartId" name="cartId" required>
-    <button type="submit">Ver Carrito</button>
-</form>
+    <!-- Tabla para mostrar la lista de carritos disponibles -->
+    <div class="table-responsive mb-4">
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID del Carrito</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="cartList">
+                <!-- La lista de carritos se cargará aquí dinámicamente -->
+            </tbody>
+        </table>
+    </div>
 
-<ul id="cartDetails"></ul>
+    <!-- Tabla para mostrar los detalles del carrito seleccionado -->
+    <div id="cartDetailsContainer" class="table-responsive" style="display: none;">
+        <h2 class="text-center mb-4">Detalles del Carrito Seleccionado</h2>
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>Producto ID</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="cartDetails">
+                <!-- Los detalles del carrito se cargarán aquí dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <script>
-    document.getElementById('viewCartForm').addEventListener('submit', function (event) {
-        event.preventDefault();
+    document.addEventListener('DOMContentLoaded', loadCarts);
 
-        const cartId = document.getElementById('cartId').value;
+    // Función para cargar la lista de carritos
+    async function loadCarts() {
+        try {
+            const response = await fetch('/api/carts');
+            const carts = await response.json();
 
-        fetch(`/api/carts/${cartId}`)
-        .then(response => response.json())
-        .then(cart => {
-            const cartDetails = document.getElementById('cartDetails');
-            cartDetails.innerHTML = '';
-            cart.products.forEach(product => {
-                const li = document.createElement('li');
-                li.textContent = `Producto ID: ${product.id} - Cantidad: ${product.quantity}`;
-                cartDetails.appendChild(li);
+            const cartList = document.getElementById('cartList');
+            cartList.innerHTML = ''; // Limpiar la lista de carritos
+
+            carts.forEach(cart => {
+                const row = document.createElement('tr');
+
+                // ID del carrito
+                const idCell = document.createElement('td');
+                idCell.textContent = cart._id;
+                row.appendChild(idCell);
+
+                // Descripción del carrito
+                const descriptionCell = document.createElement('td');
+                descriptionCell.textContent = cart.description || 'Sin descripción';
+                row.appendChild(descriptionCell);
+
+                // Acciones para ver detalles del carrito
+                const actionsCell = document.createElement('td');
+
+                // Botón "Ver Carrito" que muestra detalles en esta vista
+                const viewButton = document.createElement('button');
+                viewButton.textContent = 'Ver Carrito';
+                viewButton.classList.add('btn', 'btn-primary', 'me-2');
+                viewButton.onclick = () => loadCartDetails(cart._id);
+                actionsCell.appendChild(viewButton);
+
+                // Botón "Ver Detalles" que redirige a la vista detallada
+                const detailButton = document.createElement('a');
+                detailButton.textContent = 'Ver Detalles';
+                detailButton.href = `/carts/${cart._id}`; // Redirige a la página de detalles del carrito
+                detailButton.classList.add('btn', 'btn-info');
+                actionsCell.appendChild(detailButton);
+
+                row.appendChild(actionsCell);
+                cartList.appendChild(row);
             });
-        })
-        .catch(error => console.error('Error al ver carrito:', error));
-    });
+        } catch (error) {
+            console.error('Error al cargar la lista de carritos:', error);
+        }
+    }
+
+    // Función para cargar los detalles del carrito seleccionado
+    async function loadCartDetails(cartId) {
+        try {
+            const response = await fetch(`/api/carts/${cartId}`);
+            const cart = await response.json();
+
+            const cartDetailsContainer = document.getElementById('cartDetailsContainer');
+            const cartDetails = document.getElementById('cartDetails');
+            cartDetails.innerHTML = ''; // Limpiar los detalles anteriores
+
+            if (cart.products && cart.products.length > 0) {
+                cart.products.forEach(product => {
+                    const row = document.createElement('tr');
+
+                    // ID del producto
+                    const idCell = document.createElement('td');
+                    idCell.textContent = product.productId._id || product.productId;
+                    row.appendChild(idCell);
+
+                    // Nombre del producto
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = product.productId.title || 'Nombre no disponible';
+                    row.appendChild(nameCell);
+
+                    // Cantidad del producto
+                    const quantityCell = document.createElement('td');
+                    const quantityInput = document.createElement('input');
+                    quantityInput.type = 'number';
+                    quantityInput.value = product.quantity;
+                    quantityInput.classList.add('form-control', 'quantity-input');
+                    quantityInput.setAttribute('data-product-id', product.productId._id || product.productId);
+                    quantityCell.appendChild(quantityInput);
+                    row.appendChild(quantityCell);
+
+                    // Acciones
+                    const actionsCell = document.createElement('td');
+                    
+                    // Botón de Actualizar Cantidad
+                    const updateButton = document.createElement('button');
+                    updateButton.textContent = 'Actualizar';
+                    updateButton.classList.add('btn', 'btn-warning', 'me-2');
+                    updateButton.onclick = () => updateProductQuantity(cartId, product.productId._id || product.productId, quantityInput.value);
+                    actionsCell.appendChild(updateButton);
+
+                    // Botón de Eliminar Producto
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Eliminar';
+                    deleteButton.classList.add('btn', 'btn-danger');
+                    deleteButton.onclick = () => removeProductFromCart(cartId, product.productId._id || product.productId);
+                    actionsCell.appendChild(deleteButton);
+
+                    row.appendChild(actionsCell);
+                    cartDetails.appendChild(row);
+                });
+                cartDetailsContainer.style.display = 'block'; // Mostrar los detalles del carrito
+            } else {
+                cartDetailsContainer.style.display = 'none';
+                alert('El carrito está vacío.');
+            }
+        } catch (error) {
+            console.error('Error al cargar los detalles del carrito:', error);
+        }
+    }
+
+    // Función para actualizar la cantidad de un producto en el carrito
+    async function updateProductQuantity(cartId, productId, quantity) {
+        try {
+            const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ quantity })
+            });
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                alert('Cantidad actualizada con éxito.');
+                loadCartDetails(cartId); // Recargar los detalles del carrito
+            } else {
+                alert(`Error al actualizar cantidad: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Error al actualizar cantidad:', error);
+        }
+    }
+
+    // Función para eliminar un producto del carrito
+    async function removeProductFromCart(cartId, productId) {
+        try {
+            const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
+                method: 'DELETE'
+            });
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                alert('Producto eliminado del carrito con éxito.');
+                loadCartDetails(cartId); // Recargar los detalles del carrito
+            } else {
+                alert(`Error al eliminar producto: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Error al eliminar producto del carrito:', error);
+        }
+    }
 </script>

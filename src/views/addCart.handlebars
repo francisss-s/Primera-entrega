@@ -1,19 +1,49 @@
-<h1>Crear Carrito</h1>
+<div class="container my-5">
+    <h1 class="text-center mb-4">{{title}}</h1>
 
-<button id="createCartButton">Crear Carrito</button>
+    <!-- Formulario para crear un carrito con descripción -->
+    <div class="card p-4 shadow text-center">
+        <form id="createCartForm">
+            <div class="mb-3">
+                <label for="description" class="form-label">Descripción del Carrito:</label>
+                <input type="text" id="description" name="description" class="form-control" placeholder="Ingrese una descripción para el carrito" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Crear Carrito</button>
+        </form>
+    </div>
+
+    <!-- Alerta para mostrar el ID del carrito creado -->
+    <div id="alertContainer" class="mt-4" style="display: none;">
+        <div class="alert alert-success text-center" role="alert">
+            Carrito creado con éxito. ID del Carrito: <span id="cartId"></span>
+        </div>
+    </div>
+</div>
 
 <script>
-    document.getElementById('createCartButton').addEventListener('click', function () {
+    document.getElementById('createCartForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Obtener la descripción del carrito desde el formulario
+        const description = document.getElementById('description').value;
+
         fetch('/api/carts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({ description }) // Enviar la descripción en el cuerpo de la solicitud
         })
         .then(response => response.json())
         .then(cart => {
-            alert('Carrito creado con éxito. ID del Carrito: ' + cart.id);
+            // Mostrar alerta con el ID del carrito
+            document.getElementById('cartId').textContent = cart._id; // Usar _id como identificador
+            document.getElementById('alertContainer').style.display = 'block';
+            document.getElementById('createCartForm').reset(); // Reiniciar el formulario
         })
-        .catch(error => console.error('Error al crear el carrito:', error));
+        .catch(error => {
+            console.error('Error al crear el carrito:', error);
+            alert('Error al intentar crear el carrito');
+        });
     });
 </script>

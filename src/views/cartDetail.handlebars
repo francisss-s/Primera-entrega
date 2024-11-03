@@ -1,0 +1,32 @@
+<!-- src/views/cartDetail.handlebars -->
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Carrito de Compras</h1>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio Unitario (USD)</th>
+                    <th>Cantidad</th>
+                    <th>Total (USD)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td>{{this.productId.title}}</td>
+                    <td>{{this.productId.price}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td>{{calculateTotal this.productId.price this.quantity}}</td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="4" class="text-center">No hay productos en el carrito.</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

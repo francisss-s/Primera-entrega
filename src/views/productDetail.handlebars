@@ -1,0 +1,87 @@
+<div class="container my-5">
+    <h1 class="text-center mb-4">{{title}}</h1>
+
+    <div class="card shadow p-4">
+        <h4>Descripción</h4>
+        <p>{{description}}</p>
+
+        <h4>Detalles</h4>
+        <ul>
+            <li><strong>Código:</strong> {{code}}</li>
+            <li><strong>Precio:</strong> {{price}} USD</li>
+            <li><strong>Categoría:</strong> {{category}}</li>
+            <li><strong>Stock:</strong> {{stock}}</li>
+        </ul>
+
+        <!-- Selección de Carrito -->
+        <div class="my-3">
+            <label for="cartSelect" class="form-label">Seleccione un Carrito:</label>
+            <select id="cartSelect" class="form-select" required>
+                <option value="">Seleccione un carrito...</option>
+            </select>
+        </div>
+
+        <button class="btn btn-success mt-3" onclick="addToCart('{{_id}}')">Agregar al Carrito</button>
+    </div>
+
+    <!-- Alerta de éxito -->
+    <div id="successAlert" class="alert alert-success mt-4 text-center" style="display: none;">
+        Producto agregado al carrito con éxito.
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        loadCarts(); // Cargar los carritos disponibles al cargar la página
+    });
+
+    // Función para cargar y mostrar carritos en el menú desplegable
+    async function loadCarts() {
+        try {
+            const response = await fetch('/api/carts');
+            const carts = await response.json();
+            const cartSelect = document.getElementById('cartSelect');
+            cartSelect.innerHTML = '<option value="">Seleccione un carrito...</option>';
+
+            carts.forEach(cart => {
+                const option = document.createElement('option');
+                option.value = cart._id;
+                option.textContent = `${cart.description} (ID: ${cart._id})`;
+                cartSelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error al cargar carritos:', error);
+        }
+    }
+
+    // Función para agregar un producto al carrito seleccionado
+    async function addToCart(productId) {
+        const cartId = document.getElementById('cartSelect').value;
+
+        if (!cartId) {
+            alert('Por favor, seleccione un carrito antes de agregar productos.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ quantity: 1 }) // Se puede ajustar la cantidad según necesidad
+            });
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                const successAlert = document.getElementById('successAlert');
+                successAlert.style.display = 'block';
+                setTimeout(() => successAlert.style.display = 'none', 2000);
+            } else {
+                alert(`Error al agregar producto: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Error al agregar producto al carrito:', error);
+        }
+    }
+</script>

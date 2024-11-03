@@ -1,40 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos en tiempo real</title>
-</head>
-<body>
-    <h1>Productos (Tiempo real)</h1>
-    <ul id="productList"></ul>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io();
+<div class="container my-5">
+    <h1 class="text-center mb-4">{{title}}</h1>
 
-        // Función para cargar productos
-        function loadProducts() {
-            fetch('/api/products')
-            .then(response => response.json())
-            .then(products => {
-                const productList = document.getElementById('productList');
-                productList.innerHTML = ''; // Limpiar la lista
-                products.forEach(product => {
-                    const li = document.createElement('li');
-                    li.textContent = `${product.title} - ${product.price} USD - Stock: ${product.stock}`;
-                    productList.appendChild(li);
-                });
-            })
-            .catch(error => console.error('Error al cargar productos:', error));
-        }
+    <!-- Tabla de productos en tiempo real -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th>Título</th>
+                    <th>Precio (USD)</th>
+                    <th>Stock</th>
+                </tr>
+            </thead>
+            <tbody id="productList">
+                <!-- Los productos se cargarán aquí dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+</div>
 
-        // Cargar los productos al inicio
-        loadProducts();
+<!-- Socket.IO -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
 
-        // Escuchar el evento de actualización de productos
-        socket.on('updateProducts', () => {
-            loadProducts(); // Volver a cargar los productos cuando se emita el evento
-        });
-    </script>
-</body>
-</html>
+    // Función para cargar productos
+    function loadProducts() {
+        fetch('/api/products')
+        .then(response => response.json())
+        .then(products => {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = ''; // Limpiar la lista
+            products.payload.forEach(product => { // Ajustar a la estructura de respuesta
+                const row = document.createElement('tr');
+                
+                const titleCell = document.createElement('td');
+                titleCell.textContent = product.title;
+                row.appendChild(titleCell);
+
+                const priceCell = document.createElement('td');
+                priceCell.textContent = `${product.price} USD`;
+                row.appendChild(priceCell);
+
+                const stockCell = document.createElement('td');
+                stockCell.textContent = product.stock;
+                row.appendChild(stockCell);
+
+                productList.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error al cargar productos:', error));
+    }
+
+    // Cargar los productos al inicio
+    loadProducts();
+
+    // Escuchar el evento de actualización de productos
+    socket.on('updateProducts', () => {
+        loadProducts(); // Volver a cargar los productos cuando se emita el evento
+    });
+</script>
